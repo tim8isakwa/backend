@@ -53,6 +53,13 @@ public class SecurityConfig {
             		.requestMatchers(HttpMethod.GET, "/api/registrovaniKorisnik/").hasAuthority("ROLE_ADMIN")
             		.requestMatchers(HttpMethod.POST, "/api/registrovaniKorisnik/aktiviraj/{id}").hasAuthority("ROLE_ADMIN")
             		.requestMatchers(HttpMethod.DELETE, "/api/registrovaniKorisnik/{id}").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers(HttpMethod.GET, "/api/univerziteti/").permitAll()
+            		.requestMatchers(HttpMethod.PUT, "/api/univerziteti/").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers(HttpMethod.GET, "/api/fakulteti/").permitAll()
+            		.requestMatchers(HttpMethod.GET, "/api/fakulteti/{id}").permitAll()
+            		.requestMatchers(HttpMethod.POST, "/api/fakulteti/kreiraj").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers(HttpMethod.PUT, "/api/fakulteti/{id}").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers(HttpMethod.DELETE, "/api/fakulteti/{id}").hasAuthority("ROLE_ADMIN")
             		.anyRequest().authenticated()
     		)
             .addFilterBefore(authenticationFilterBean, UsernamePasswordAuthenticationFilter.class);

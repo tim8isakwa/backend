@@ -127,7 +127,6 @@ public class UniverzitetMapper {
         nastavnik.setIme(dto.getIme());
         
         return nastavnik;
-
     }
     
     private FakultetDTO mapFakultetToDTO(Fakultet fakultet) {
@@ -158,7 +157,6 @@ public class UniverzitetMapper {
         }
         
         return fakultet;
-
     }
     
     private static StudijskiProgramDTO mapStudijskiProgramToDTO(StudijskiProgram program) {

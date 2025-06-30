@@ -7,41 +7,41 @@ import org.springframework.stereotype.Service;
 
 import com.univerzitet.app.generic.GenericService;
 import com.univerzitet.app.generic.Repo;
-import com.univerzitet.app.model.Fakultet;
+import com.univerzitet.app.model.StudijskiProgram;
 
 @Service
-public class FakultetService extends GenericService<Fakultet, Long>{
+public class StudijskiProgramService extends GenericService<StudijskiProgram, Long>{
 
 	@Autowired
-	public FakultetService(Repo<Fakultet, Long> repository) {
+	public StudijskiProgramService(Repo<StudijskiProgram, Long> repository) {
 		super(repository);
 	}
 
 	@Override
-	public Fakultet save(Fakultet t) {
+	public StudijskiProgram save(StudijskiProgram t) {
 		return super.save(t);
 	}
 
 	@Override
-	public Fakultet findById(Long id) {
+	public StudijskiProgram findById(Long id) {
 		return super.findById(id);
 	}
 
 	@Override
-	public List<Fakultet> findAll() {
+	public List<StudijskiProgram> findAll() {
 		return super.findAll();
 	}
-	
-	public Fakultet findByNaziv(String naziv) {
+
+	public StudijskiProgram findByNaziv(String naziv) {
 		return this.findByNaziv(naziv);
 	}
 	
 	public boolean existsById(Long id) {
 		return this.existsById(id);
 	}
-
+	
 	@Override
-	public Fakultet update(Fakultet t, Long id) {
+	public StudijskiProgram update(StudijskiProgram t, Long id) {
 		return super.update(t, id);
 	}
 

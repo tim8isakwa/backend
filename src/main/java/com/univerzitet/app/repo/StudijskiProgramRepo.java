@@ -3,10 +3,10 @@ package com.univerzitet.app.repo;
 import org.springframework.stereotype.Repository;
 
 import com.univerzitet.app.generic.Repo;
-import com.univerzitet.app.model.Fakultet;
+import com.univerzitet.app.model.StudijskiProgram;
 
 @Repository
-public interface FakultetRepo extends Repo<Fakultet, Long>{
-	Fakultet findByNaziv(String naziv);
+public interface StudijskiProgramRepo extends Repo<StudijskiProgram, Long>{
+	StudijskiProgram findByNaziv(String naziv);
 	boolean existsById(Long id);
 }

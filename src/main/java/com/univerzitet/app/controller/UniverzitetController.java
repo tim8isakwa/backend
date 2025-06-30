@@ -63,6 +63,7 @@ public class UniverzitetController extends GenericController<Univerzitet> {
 		return univerzitet != null ? ResponseEntity.ok(univerzitetMapper.mapToDTO(univerzitet)) : ResponseEntity.notFound().build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("")
 	public ResponseEntity<UniverzitetDTO> save(@RequestBody UniverzitetDTO dto) {
 		if (dto.getId() == null || !univerzitetService.existsById(dto.getId())) {
