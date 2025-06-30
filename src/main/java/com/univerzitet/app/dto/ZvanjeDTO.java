@@ -13,18 +13,22 @@ public class ZvanjeDTO {
 	private String tipZvanja;
 	
 	private String naucnaOblast;
+	
+	private NastavnikDTO nastavnik;
 
 	public ZvanjeDTO() {
 		super();
 	}
 
-	public ZvanjeDTO(Long id, LocalDate datumIzbora, LocalDate datumPrestanka, String tipZvanja, String naucnaOblast) {
+	public ZvanjeDTO(Long id, LocalDate datumIzbora, LocalDate datumPrestanka, String tipZvanja, String naucnaOblast,
+			NastavnikDTO nastavnik) {
 		super();
 		this.id = id;
 		this.datumIzbora = datumIzbora;
 		this.datumPrestanka = datumPrestanka;
 		this.tipZvanja = tipZvanja;
 		this.naucnaOblast = naucnaOblast;
+		this.nastavnik = nastavnik;
 	}
 
 	public Long getId() {
@@ -65,5 +69,13 @@ public class ZvanjeDTO {
 
 	public void setNaucnaOblast(String naucnaOblast) {
 		this.naucnaOblast = naucnaOblast;
+	}
+
+	public NastavnikDTO getNastavnik() {
+		return nastavnik;
+	}
+
+	public void setNastavnik(NastavnikDTO nastavnik) {
+		this.nastavnik = nastavnik;
 	}
 }

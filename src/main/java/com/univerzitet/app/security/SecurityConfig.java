@@ -49,7 +49,10 @@ public class SecurityConfig {
             		.requestMatchers(HttpMethod.POST, "/api/registrovaniKorisnik/prijava").permitAll()
             		.requestMatchers(HttpMethod.POST, "/api/registrovaniKorisnik/registracija").permitAll()
             		.requestMatchers(HttpMethod.GET, "/api/registrovaniKorisnik/{id}").permitAll()
-            		
+            		.requestMatchers(HttpMethod.PUT, "/api/registrovaniKorisnik/{id}").permitAll()
+            		.requestMatchers(HttpMethod.GET, "/api/registrovaniKorisnik/").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers(HttpMethod.POST, "/api/registrovaniKorisnik/aktiviraj/{id}").hasAuthority("ROLE_ADMIN")
+            		.requestMatchers(HttpMethod.DELETE, "/api/registrovaniKorisnik/{id}").hasAuthority("ROLE_ADMIN")
             		.anyRequest().authenticated()
     		)
             .addFilterBefore(authenticationFilterBean, UsernamePasswordAuthenticationFilter.class);

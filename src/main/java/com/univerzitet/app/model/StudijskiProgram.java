@@ -21,6 +21,9 @@ public class StudijskiProgram {
 	@Lob
 	private String naziv;
 	
+	@Lob
+	private String opis;
+	
 	@OneToOne
 	private Nastavnik rukovodilac;
 	
@@ -34,11 +37,12 @@ public class StudijskiProgram {
 		super();
 	}
 
-	public StudijskiProgram(Long id, String naziv, Nastavnik rukovodilac, Fakultet fakultet,
+	public StudijskiProgram(Long id, String naziv, String opis, Nastavnik rukovodilac, Fakultet fakultet,
 			Set<GodinaStudija> godinaStudija) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
+		this.opis = opis;
 		this.rukovodilac = rukovodilac;
 		this.fakultet = fakultet;
 		this.godinaStudija = godinaStudija;
@@ -60,6 +64,14 @@ public class StudijskiProgram {
 		this.naziv = naziv;
 	}
 	
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
 	public Nastavnik getRukovodilac() {
 		return rukovodilac;
 	}

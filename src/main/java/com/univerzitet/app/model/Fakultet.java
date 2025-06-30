@@ -21,6 +21,9 @@ public class Fakultet {
 	@Lob
 	private String naziv;
 
+	@Lob
+	private String opis;
+	
 	@OneToOne
 	private Adresa adresa;
 	
@@ -37,11 +40,12 @@ public class Fakultet {
 		super();
 	}
 
-	public Fakultet(Long id, String naziv, Adresa adresa, Nastavnik dekan, Set<StudijskiProgram> programi,
+	public Fakultet(Long id, String naziv, String opis, Adresa adresa, Nastavnik dekan, Set<StudijskiProgram> programi,
 			Univerzitet univerzitet) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
+		this.opis = opis;
 		this.adresa = adresa;
 		this.dekan = dekan;
 		this.programi = programi;
@@ -62,6 +66,14 @@ public class Fakultet {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
 	}
 
 	public Adresa getAdresa() {

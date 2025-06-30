@@ -13,6 +13,8 @@ public class UniverzitetDTO {
 
 	private LocalDate datumOsnivanja;
 
+	private String opis;
+	
 	private AdresaDTO adresa;
 	
 	private NastavnikDTO rektor;
@@ -23,11 +25,12 @@ public class UniverzitetDTO {
 		super();
 	}
 
-	public UniverzitetDTO(Long id, String naziv, LocalDate datumOsnivanja, AdresaDTO adresa,
+	public UniverzitetDTO(Long id, String naziv, LocalDate datumOsnivanja, String opis, AdresaDTO adresa,
 	                      NastavnikDTO rektor, Set<FakultetDTO> fakulteti) {
 		this.id = id;
 		this.naziv = naziv;
 		this.datumOsnivanja = datumOsnivanja;
+		this.opis = opis;
 		this.adresa = adresa;
 		this.rektor = rektor;
 		this.fakulteti = fakulteti;
@@ -55,6 +58,14 @@ public class UniverzitetDTO {
 
 	public void setDatumOsnivanja(LocalDate datumOsnivanja) {
 		this.datumOsnivanja = datumOsnivanja;
+	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
 	}
 
 	public AdresaDTO getAdresa() {

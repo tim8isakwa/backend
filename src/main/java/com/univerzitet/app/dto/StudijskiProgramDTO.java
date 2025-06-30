@@ -8,6 +8,8 @@ public class StudijskiProgramDTO {
 	
 	private String naziv;
 
+	private String opis;
+	
 	private NastavnikDTO rukovodilac;
 	
 	private FakultetDTO fakultet;
@@ -18,10 +20,11 @@ public class StudijskiProgramDTO {
 		super();
 	}
 
-	public StudijskiProgramDTO(Long id, String naziv, NastavnikDTO rukovodilac,
+	public StudijskiProgramDTO(Long id, String naziv, String opis, NastavnikDTO rukovodilac,
 	                           FakultetDTO fakultet, Set<GodinaStudijaDTO> godineStudija) {
 		this.id = id;
 		this.naziv = naziv;
+		this.opis = opis;
 		this.rukovodilac = rukovodilac;
 		this.fakultet = fakultet;
 		this.godineStudija = godineStudija;
@@ -41,6 +44,14 @@ public class StudijskiProgramDTO {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
+	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
 	}
 
 	public NastavnikDTO getRukovodilac() {

@@ -27,6 +27,9 @@ public class Univerzitet {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate datumOsnivanja;
 	
+	@Lob
+	private String opis;
+	
 	@OneToOne
 	private Adresa adresa;
 	
@@ -40,12 +43,13 @@ public class Univerzitet {
 		super();
 	}
 
-	public Univerzitet(Long id, String naziv, LocalDate datumOsnivanja, Adresa adresa, Nastavnik rektor,
+	public Univerzitet(Long id, String naziv, LocalDate datumOsnivanja, String opis, Adresa adresa, Nastavnik rektor,
 			Set<Fakultet> fakulteti) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.datumOsnivanja = datumOsnivanja;
+		this.opis = opis;
 		this.adresa = adresa;
 		this.rektor = rektor;
 		this.fakulteti = fakulteti;
@@ -73,6 +77,14 @@ public class Univerzitet {
 
 	public void setDatumOsnivanja(LocalDate datumOsnivanja) {
 		this.datumOsnivanja = datumOsnivanja;
+	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
 	}
 
 	public Adresa getAdresa() {

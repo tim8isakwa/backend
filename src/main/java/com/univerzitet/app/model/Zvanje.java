@@ -28,19 +28,23 @@ public class Zvanje {
 	
 	@ManyToOne
 	private NaucnaOblast naucnaOblast;
-
+	
+	@ManyToOne
+	private Nastavnik nastavnik;
+	
 	public Zvanje() {
 		super();
 	}
 
 	public Zvanje(Long id, LocalDate datumIzbora, LocalDate datumPrestanka, TipZvanja tipZvanja,
-			NaucnaOblast naucnaOblast) {
+			NaucnaOblast naucnaOblast, Nastavnik nastavnik) {
 		super();
 		this.id = id;
 		this.datumIzbora = datumIzbora;
 		this.datumPrestanka = datumPrestanka;
 		this.tipZvanja = tipZvanja;
 		this.naucnaOblast = naucnaOblast;
+		this.nastavnik = nastavnik;
 	}
 
 	public Long getId() {
@@ -81,5 +85,13 @@ public class Zvanje {
 
 	public void setNaucnaOblast(NaucnaOblast naucnaOblast) {
 		this.naucnaOblast = naucnaOblast;
+	}
+
+	public Nastavnik getNastavnik() {
+		return nastavnik;
+	}
+
+	public void setNastavnik(Nastavnik nastavnik) {
+		this.nastavnik = nastavnik;
 	}
 }
