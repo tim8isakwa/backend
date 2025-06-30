@@ -85,6 +85,7 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 	        
 	        return ResponseEntity.ok(response);
 	    }
+	    
 	    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 	

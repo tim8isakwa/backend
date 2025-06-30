@@ -24,7 +24,7 @@ public class RegistrovaniKorisnikMapper {
 		korisnik.setKorisnickoIme(dto.getKorisnickoIme());
 		korisnik.setLozinka(passwordEncoder.encode(dto.getLozinka()));
 		korisnik.setEmail(dto.getEmail());
-		korisnik.setAktivan(false);
+		korisnik.setAktivan(dto.isAktivan());
 		
 		return korisnik;
 	}
@@ -36,6 +36,7 @@ public class RegistrovaniKorisnikMapper {
 		dto.setKorisnickoIme(korisnik.getKorisnickoIme());
 		dto.setEmail(korisnik.getEmail());
 		dto.setAktivan(korisnik.isAktivan());
+		
 		Set<DodeljenoPravoPristupaDTO> dodeljenaPrava = korisnik.getDodeljenaPrava().stream()
 				.map(pravoPristupa -> new DodeljenoPravoPristupaDTO(pravoPristupa.getId(), pravoPristupa.getPravoPristupa().getNaziv()))
 				.collect(Collectors.toSet());
