@@ -1,5 +1,7 @@
 package com.univerzitet.app.model;
 
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,16 +21,20 @@ public class PohadjanjePredmeta {
 	
 	@ManyToOne
 	private Student student;
+	
+	@OneToMany(mappedBy = "pohadjanjePredmeta")
+	private Set<Polaganje> polaganja;
 
 	public PohadjanjePredmeta() {
 		super();
 	}
 
-	public PohadjanjePredmeta(Long id, RealizacijaPredmeta realizacijaPredmeta, Student student) {
+	public PohadjanjePredmeta(Long id, RealizacijaPredmeta realizacijaPredmeta, Student student, Set<Polaganje> polaganje) {
 		super();
 		this.id = id;
 		this.realizacijaPredmeta = realizacijaPredmeta;
 		this.student = student;
+		this.polaganja = polaganje;
 	}
 
 	public Long getId() {
@@ -53,5 +59,13 @@ public class PohadjanjePredmeta {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	
+	public Set<Polaganje> getPolaganja() {
+	    return polaganja;
+	}
+
+	public void setPolaganja(Set<Polaganje> polaganja) {
+	    this.polaganja = polaganja;
 	}
 }
