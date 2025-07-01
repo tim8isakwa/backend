@@ -45,8 +45,7 @@ public class Nastavnik extends RegistrovaniKorisnik {
 		super(id, korisnickoIme, lozinka, email, aktivan, dodeljenaPrava);
 	}
 
-	public Nastavnik(Long id, String jmbg, String ime, String biografija, Adresa adresa, Set<Zvanje> zvanja,
-			NastavnikNaRealizaciji nastavnikNaRealizaciji) {
+	public Nastavnik(Long id, String jmbg, String ime, String biografija, Adresa adresa, Set<Zvanje> zvanja) {
 		super();
 		this.id = id;
 		this.jmbg = jmbg;
@@ -54,7 +53,6 @@ public class Nastavnik extends RegistrovaniKorisnik {
 		this.biografija = biografija;
 		this.adresa = adresa;
 		this.zvanja = zvanja;
-		this.nastavnikNaRealizaciji = nastavnikNaRealizaciji;
 	}
 
 	public Long getId() {

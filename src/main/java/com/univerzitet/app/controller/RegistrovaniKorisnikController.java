@@ -1,8 +1,10 @@
 package com.univerzitet.app.controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -22,11 +24,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.univerzitet.app.dto.NastavnikDTO;
 import com.univerzitet.app.dto.RegistrovaniKorisnikDTO;
+import com.univerzitet.app.dto.ZvanjeDTO;
 import com.univerzitet.app.generic.GenericController;
 import com.univerzitet.app.generic.GenericService;
 import com.univerzitet.app.mapper.RegistrovaniKorisnikMapper;
+import com.univerzitet.app.model.DodeljenoPravoPristupa;
+import com.univerzitet.app.model.PravoPristupa;
 import com.univerzitet.app.model.RegistrovaniKorisnik;
+import com.univerzitet.app.repo.PravoPristupaRepo;
 import com.univerzitet.app.service.RegistrovaniKorisnikService;
 import com.univerzitet.app.utils.TokenUtils;
 
@@ -40,17 +47,20 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 
 	private RegistrovaniKorisnikMapper korisnikMapper;
 	
+	private PravoPristupaRepo pravoPristupaRepo;
+	
 	private PasswordEncoder passwordEncoder;
 
 	private TokenUtils tokenUtils;
 	
 	@Autowired
 	public RegistrovaniKorisnikController(RegistrovaniKorisnikService korisnikService, UserDetailsService userDetailsService,
-			RegistrovaniKorisnikMapper korisnikMapper, PasswordEncoder passwordEncoder, TokenUtils tokenUtils) {
+			RegistrovaniKorisnikMapper korisnikMapper, PravoPristupaRepo pravoPristupaRepo, PasswordEncoder passwordEncoder, TokenUtils tokenUtils) {
 		super(korisnikService);
 		this.korisnikService = korisnikService;
 		this.userDetailsService = userDetailsService;
 		this.korisnikMapper = korisnikMapper;
+		this.pravoPristupaRepo = pravoPristupaRepo;
 		this.passwordEncoder = passwordEncoder;
 		this.tokenUtils = tokenUtils;
 	}
@@ -137,6 +147,37 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		return ResponseEntity.ok(korisnikMapper.mapToDTO(korisnik));
 	}
 
+	@PostMapping("/osoblje")
+	public ResponseEntity<RegistrovaniKorisnikDTO> addOsoblje(@RequestBody RegistrovaniKorisnikDTO dto) {
+		if (korisnikService.postojiKorisnikSaKorisnickimImenom(dto.getKorisnickoIme())) {
+	 		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	 	}
+		
+		if (korisnikService.postojiKorisnikSaEmailom(dto.getEmail())) {
+	 		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	 	}
+		
+
+		RegistrovaniKorisnik korisnik = korisnikMapper.mapToEntity(dto);
+		
+		Set<DodeljenoPravoPristupa> dodeljenaPrava = new HashSet<>();
+		DodeljenoPravoPristupa dodeljenoPravo = new DodeljenoPravoPristupa();
+		PravoPristupa pravoPristupa = pravoPristupaRepo.findByNaziv("ROLE_OSOBLJE");
+		
+		if (pravoPristupa == null) {
+            throw new RuntimeException("Pravo pristupa ne postoji.");
+		}
+		
+		dodeljenoPravo.setPravoPristupa(pravoPristupa);
+		dodeljenoPravo.setRegistrovaniKorisnik(korisnik);
+		dodeljenaPrava.add(dodeljenoPravo);
+		
+		korisnik.setDodeljenaPrava(dodeljenaPrava);
+		
+		korisnikService.save(korisnik);
+		return ResponseEntity.ok(korisnikMapper.mapToDTO(korisnik));
+	}
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/aktiviraj/{id}")
 	public ResponseEntity<RegistrovaniKorisnik> activate(@PathVariable Long id) {

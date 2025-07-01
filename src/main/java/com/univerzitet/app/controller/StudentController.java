@@ -55,9 +55,9 @@ public class StudentController extends GenericController<Student>{
 		this.pravoPristupaRepo = pravoPristupaRepo;
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('OSOBLJE')")
 	@GetMapping("")
-	public ResponseEntity<List<StudentDTO>> getAllKorisnici() {
+	public ResponseEntity<List<StudentDTO>> getAllStudenti() {
 		List<StudentDTO> dtos = StreamSupport.stream(studentService.findAll().spliterator(), false)
 				.map(studentMapper::mapToDTO).collect(Collectors.toList());
 		return ResponseEntity.ok(dtos);
@@ -69,7 +69,7 @@ public class StudentController extends GenericController<Student>{
 		return student != null ? ResponseEntity.ok(studentMapper.mapToDTO(student)) : ResponseEntity.notFound().build();
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('OSOBLJE')")
 	@PostMapping("/kreiraj")
 	public ResponseEntity<StudentDTO> create(@RequestBody StudentDTO dto) {
 		RegistrovaniKorisnik korisnik = korisnikService.findByEmail(dto.getEmail());

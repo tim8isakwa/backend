@@ -65,7 +65,7 @@ public class NastavnikController extends GenericController<Nastavnik>{
 
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("")
-	public ResponseEntity<List<NastavnikDTO>> getAllKorisnici() {
+	public ResponseEntity<List<NastavnikDTO>> getAllNastavnici() {
 		List<NastavnikDTO> dtos = StreamSupport.stream(nastavnikService.findAll().spliterator(), false)
 				.map(nastavnikMapper::mapToDTO).collect(Collectors.toList());
 		return ResponseEntity.ok(dtos);
