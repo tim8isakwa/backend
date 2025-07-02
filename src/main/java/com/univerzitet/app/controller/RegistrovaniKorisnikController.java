@@ -55,6 +55,7 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		this.tokenUtils = tokenUtils;
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("")
 	public ResponseEntity<List<RegistrovaniKorisnikDTO>> getAllKorisnici() {
 		List<RegistrovaniKorisnikDTO> dtos = StreamSupport.stream(korisnikService.findAll().spliterator(), false)
@@ -84,6 +85,7 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 	        
 	        return ResponseEntity.ok(response);
 	    }
+	    
 	    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 	

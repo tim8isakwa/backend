@@ -19,7 +19,7 @@ public class TipZvanja {
 	@Lob
 	private String naziv;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "tipZvanja")
 	private Set<Zvanje> zvanja;
 
 	public TipZvanja() {
