@@ -22,7 +22,6 @@ public class RegistrovaniKorisnikMapper {
 		
 		korisnik.setId(dto.getId());
 		korisnik.setKorisnickoIme(dto.getKorisnickoIme());
-		korisnik.setLozinka(passwordEncoder.encode(dto.getLozinka()));
 		korisnik.setEmail(dto.getEmail());
 		korisnik.setAktivan(dto.isAktivan());
 		

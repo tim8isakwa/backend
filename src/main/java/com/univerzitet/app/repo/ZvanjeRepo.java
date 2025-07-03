@@ -6,6 +6,6 @@ import com.univerzitet.app.generic.Repo;
 import com.univerzitet.app.model.Zvanje;
 
 @Repository
-public interface ZvanjeRepo extends Repo<Zvanje, Long> {
+public interface ZvanjeRepo extends Repo<Zvanje, Long>{
 
 }
