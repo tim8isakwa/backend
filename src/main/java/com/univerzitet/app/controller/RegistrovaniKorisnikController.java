@@ -131,6 +131,11 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 	 	}
 		
 		RegistrovaniKorisnik korisnik = korisnikMapper.mapToEntity(dto);
+		
+		if (dto.getLozinka() == null || dto.getLozinka().isEmpty()) {
+		    return ResponseEntity.badRequest().body(null); 
+		}
+		
 		korisnik.setLozinka(passwordEncoder.encode(dto.getLozinka()));
 		korisnikService.save(korisnik);
 		
