@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -28,6 +29,7 @@ public class StudijskiProgram {
 	private Nastavnik rukovodilac;
 	
 	@ManyToOne
+	@JoinColumn(name = "fakultet_id", nullable = true)
 	private Fakultet fakultet;
 	
 	@OneToMany(mappedBy = "studijskiProgram")

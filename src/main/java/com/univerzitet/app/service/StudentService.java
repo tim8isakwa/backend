@@ -2,6 +2,7 @@ package com.univerzitet.app.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 
 import com.univerzitet.app.dto.ObavestenjeDTO;
@@ -13,18 +14,18 @@ import com.univerzitet.app.mapper.StudentMapper;
 import com.univerzitet.app.model.Obavestenje;
 import com.univerzitet.app.model.Student;
 import com.univerzitet.app.repo.ObavestenjeRepository;
-import com.univerzitet.app.repo.StudentRepository;
+import com.univerzitet.app.repo.StudentRepo;
 
 @Service
 public class StudentService extends GenericService<Student, Long> {
 
-    private final StudentRepository studentRepo;
+    private final StudentRepo studentRepo;
     private final StudentMapper studentMapper;
     private final ObavestenjeRepository obavestenjeRepo;
     private final ObavestenjeMapper obavestenjeMapper;
 
     public StudentService(Repo<Student, Long> repository,
-                          StudentRepository studentRepo,
+                          StudentRepo studentRepo,
                           StudentMapper studentMapper,
                           ObavestenjeRepository obavestenjeRepo,
                           ObavestenjeMapper obavestenjeMapper) {

@@ -1,7 +1,10 @@
 package com.univerzitet.app.model;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +22,9 @@ public class GodinaStudija {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate godina;
 	
 	@ManyToMany
 	@JoinTable(
@@ -55,6 +61,14 @@ public class GodinaStudija {
 		this.id = id;
 	}
 
+	public LocalDate getGodina() {
+		return godina;
+	}
+
+	public void setGodina(LocalDate godina) {
+		this.godina = godina;
+	}
+	
 	public List<Predmet> getPredmeti() {
 		return predmeti;
 	}

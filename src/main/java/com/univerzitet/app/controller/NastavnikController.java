@@ -28,6 +28,7 @@ import com.univerzitet.app.model.Fakultet;
 import com.univerzitet.app.model.Nastavnik;
 import com.univerzitet.app.model.PravoPristupa;
 import com.univerzitet.app.model.StudijskiProgram;
+import com.univerzitet.app.model.Zvanje;
 import com.univerzitet.app.repo.PravoPristupaRepo;
 import com.univerzitet.app.service.AdresaService;
 import com.univerzitet.app.service.NastavnikService;
@@ -63,7 +64,6 @@ public class NastavnikController extends GenericController<Nastavnik>{
 		this.zvanjeService = zvanjeService;
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("")
 	public ResponseEntity<List<NastavnikDTO>> getAllNastavnici() {
 		List<NastavnikDTO> dtos = StreamSupport.stream(nastavnikService.findAll().spliterator(), false)
@@ -110,16 +110,21 @@ public class NastavnikController extends GenericController<Nastavnik>{
 		
 		nastavnik.setDodeljenaPrava(dodeljenaPrava);
 		
-		if (dto.getZvanja() != null && !dto.getZvanja().isEmpty()) {
-			for (ZvanjeDTO zvanjeDto : dto.getZvanja()) {
-				NastavnikDTO nastavnikZaZvanje = new NastavnikDTO();
-				nastavnikZaZvanje.setId(nastavnik.getId());
-				zvanjeDto.setNastavnik(nastavnikZaZvanje);
-				zvanjeService.save(zvanjeDto);
-			}
+//		if (dto.getZvanja() != null && !dto.getZvanja().isEmpty()) {
+//			for (ZvanjeDTO zvanjeDto : dto.getZvanja()) {
+//				NastavnikDTO nastavnikZvanje = new NastavnikDTO();
+//				nastavnikZvanje.setId(nastavnik.getId());
+//				zvanjeDto.setNastavnik(nastavnikZvanje);
+//				zvanjeService.save(zvanjeDto);
+//			}
+//		}
+		
+		if (dto.getZvanje() != null) {
+			Zvanje zvanje = zvanjeService.save(dto.getZvanje());
+			nastavnik.setZvanje(zvanje);
 		}
 		
-		korisnikService.save(nastavnik);
-		return ResponseEntity.ok(nastavnikMapper.mapToDTO(nastavnik));
+		Nastavnik sacuvano = (Nastavnik) korisnikService.save(nastavnik);
+		return ResponseEntity.ok(nastavnikMapper.mapToDTO(sacuvano));
 	}
 }

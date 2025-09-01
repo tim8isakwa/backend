@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 import com.univerzitet.app.generic.GenericService;
 import com.univerzitet.app.generic.Repo;
 import com.univerzitet.app.model.Fakultet;
+import com.univerzitet.app.repo.FakultetRepo;
 
 @Service
 public class FakultetService extends GenericService<Fakultet, Long>{
 
+	private FakultetRepo repo;
+	
 	@Autowired
-	public FakultetService(Repo<Fakultet, Long> repository) {
+	public FakultetService(Repo<Fakultet, Long> repository, FakultetRepo repo) {
 		super(repository);
+		this.repo = repo;
 	}
 
 	@Override
@@ -33,11 +37,11 @@ public class FakultetService extends GenericService<Fakultet, Long>{
 	}
 	
 	public Fakultet findByNaziv(String naziv) {
-		return this.findByNaziv(naziv);
+		return repo.findByNaziv(naziv);
 	}
 	
 	public boolean existsById(Long id) {
-		return this.existsById(id);
+		return repo.existsById(id);
 	}
 
 	@Override

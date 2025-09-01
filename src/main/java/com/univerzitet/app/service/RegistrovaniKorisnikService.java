@@ -41,6 +41,10 @@ public class RegistrovaniKorisnikService extends GenericService<RegistrovaniKori
 		return this.repository.findByEmail(email);
 	}
 	
+	public List<RegistrovaniKorisnik> findByStatus(boolean aktivan) {
+		return this.repository.findByAktivan(aktivan);
+	}
+	
 	public boolean postojiKorisnikSaKorisnickimImenom(String korisnickoIme) {
 		return this.repository.existsByKorisnickoIme(korisnickoIme);
 	}

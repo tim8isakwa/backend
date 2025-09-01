@@ -12,14 +12,14 @@ public class StudentNaGodiniDTO {
 
 	private StudentDTO student;
 
-	private GodinaStudijaDTO godinaStudija;
+	private LocalDate godinaStudija;
 
 	public StudentNaGodiniDTO() {
 		super();
 	}
 
 	public StudentNaGodiniDTO(Long id, LocalDate datumUpisa, String brojIndeksa,
-	                          StudentDTO student, GodinaStudijaDTO godinaStudija) {
+	                          StudentDTO student, LocalDate godinaStudija) {
 		this.id = id;
 		this.datumUpisa = datumUpisa;
 		this.brojIndeksa = brojIndeksa;
@@ -59,11 +59,11 @@ public class StudentNaGodiniDTO {
 		this.student = student;
 	}
 
-	public GodinaStudijaDTO getGodinaStudija() {
+	public LocalDate getGodinaStudija() {
 		return godinaStudija;
 	}
 
-	public void setGodinaStudija(GodinaStudijaDTO godinaStudija) {
+	public void setGodinaStudija(LocalDate godinaStudija) {
 		this.godinaStudija = godinaStudija;
 	}
 }

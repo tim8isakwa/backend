@@ -38,6 +38,10 @@ public class NastavnikMapper {
 			nastavnik.setAdresa(mapAdresaToEntity(dto.getAdresa()));
 		}
 		
+		nastavnik.setJmbg(dto.getJmbg());
+		nastavnik.setIme(dto.getIme());
+		nastavnik.setBiografija(dto.getBiografija());
+		
 		return nastavnik;
 	}
 	
@@ -53,11 +57,19 @@ public class NastavnikMapper {
 			dto.setAdresa(mapAdresaToDTO(nastavnik.getAdresa()));
 		}
 		
-		if (nastavnik.getZvanja() != null) {
-            dto.setZvanja(nastavnik.getZvanja().stream()
-                    .map(this::mapZvanjeToDTO)
-                    .collect(Collectors.toSet()));
-        }
+//		if (nastavnik.getZvanja() != null) {
+//            dto.setZvanja(nastavnik.getZvanja().stream()
+//                    .map(this::mapZvanjeToDTO)
+//                    .collect(Collectors.toSet()));
+//        }
+		
+		dto.setJmbg(nastavnik.getJmbg());
+		dto.setIme(nastavnik.getIme());
+		dto.setBiografija(nastavnik.getBiografija());
+		
+		if (nastavnik.getZvanje() != null) {
+			dto.setZvanje(mapZvanjeToDTO(nastavnik.getZvanje()));
+		}
 		
 		Set<DodeljenoPravoPristupaDTO> dodeljenaPrava = nastavnik.getDodeljenaPrava().stream()
 				.map(pravoPristupa -> new DodeljenoPravoPristupaDTO(pravoPristupa.getId(), pravoPristupa.getPravoPristupa().getNaziv()))

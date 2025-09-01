@@ -47,8 +47,8 @@ public class ZvanjeService extends GenericService<Zvanje, Long>{
                     return naucnaOblastRepo.save(novaNaucnaOblast);
                 });
 
-        Nastavnik nastavnik = nastavnikRepo.findById(dto.getNastavnik().getId())
-                .orElse(null);
+//        Nastavnik nastavnik = nastavnikRepo.findById(dto.getNastavnik().getId())
+//                .orElse(null);
         
         Zvanje zvanje;
 
@@ -58,7 +58,7 @@ public class ZvanjeService extends GenericService<Zvanje, Long>{
             zvanje.setDatumPrestanka(dto.getDatumPrestanka());
             zvanje.setTipZvanja(tipZvanja);
             zvanje.setNaucnaOblast(naucnaOblast);
-            zvanje.setNastavnik(nastavnik);
+//            zvanje.setNastavnik(nastavnik);
 
             return this.save(zvanje);
         } else {
@@ -67,7 +67,7 @@ public class ZvanjeService extends GenericService<Zvanje, Long>{
             novoZvanje.setDatumPrestanka(dto.getDatumPrestanka());
             novoZvanje.setTipZvanja(tipZvanja);
             novoZvanje.setNaucnaOblast(naucnaOblast);
-            novoZvanje.setNastavnik(nastavnik);
+//            novoZvanje.setNastavnik(nastavnik);
             
             return this.save(novoZvanje);
         }

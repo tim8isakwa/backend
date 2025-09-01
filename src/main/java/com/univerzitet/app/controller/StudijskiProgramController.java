@@ -20,7 +20,6 @@ import com.univerzitet.app.dto.StudijskiProgramDTO;
 import com.univerzitet.app.generic.GenericController;
 import com.univerzitet.app.mapper.StudijskiProgramMapper;
 import com.univerzitet.app.model.StudijskiProgram;
-import com.univerzitet.app.model.StudijskiProgram;
 import com.univerzitet.app.service.StudijskiProgramService;
 
 @RestController
@@ -38,9 +37,8 @@ public class StudijskiProgramController extends GenericController<StudijskiProgr
 		this.programMapper = programMapper;
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("")
-	public ResponseEntity<List<StudijskiProgramDTO>> getAllKorisnici() {
+	public ResponseEntity<List<StudijskiProgramDTO>> getAllStudijskiProgrami() {
 		List<StudijskiProgramDTO> dtos = StreamSupport.stream(programService.findAll().spliterator(), false)
 				.map(programMapper::mapToDTO).collect(Collectors.toList());
 		return ResponseEntity.ok(dtos);

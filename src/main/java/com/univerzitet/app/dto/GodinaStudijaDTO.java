@@ -1,11 +1,14 @@
 package com.univerzitet.app.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 public class GodinaStudijaDTO {
 
 	private Long id;
+	
+	private LocalDate godina;
 
 	private List<PredmetDTO> predmeti;
 	
@@ -17,10 +20,11 @@ public class GodinaStudijaDTO {
 		super();
 	}
 
-	public GodinaStudijaDTO(Long id, List<PredmetDTO> predmeti,
-	                        StudijskiProgramDTO studijskiProgram,
-	                        Set<StudentNaGodiniDTO> studentiNaGodini) {
+	public GodinaStudijaDTO(Long id, LocalDate godina, List<PredmetDTO> predmeti, StudijskiProgramDTO studijskiProgram,
+			Set<StudentNaGodiniDTO> studentiNaGodini) {
+		super();
 		this.id = id;
+		this.godina = godina;
 		this.predmeti = predmeti;
 		this.studijskiProgram = studijskiProgram;
 		this.studentiNaGodini = studentiNaGodini;
@@ -34,6 +38,14 @@ public class GodinaStudijaDTO {
 		this.id = id;
 	}
 
+	public LocalDate getGodina() {
+		return godina;
+	}
+
+	public void setGodina(LocalDate godina) {
+		this.godina = godina;
+	}
+	
 	public List<PredmetDTO> getPredmeti() {
 		return predmeti;
 	}

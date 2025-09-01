@@ -7,20 +7,25 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.univerzitet.app.dto.ObavestenjeDTO;
 import com.univerzitet.app.dto.StudentDTO;
+import com.univerzitet.app.dto.StudentNaGodiniDTO;
 import com.univerzitet.app.dto.StudentPredmetDTO;
 import com.univerzitet.app.generic.GenericController;
 import com.univerzitet.app.mapper.StudentMapper;
 import com.univerzitet.app.model.Adresa;
 import com.univerzitet.app.model.DodeljenoPravoPristupa;
+import com.univerzitet.app.model.GodinaStudija;
+import com.univerzitet.app.model.Nastavnik;
 import com.univerzitet.app.model.PravoPristupa;
 import com.univerzitet.app.model.RegistrovaniKorisnik;
 import com.univerzitet.app.model.Student;
+import com.univerzitet.app.model.StudentNaGodini;
 import com.univerzitet.app.repo.PravoPristupaRepo;
 import com.univerzitet.app.service.AdresaService;
 import com.univerzitet.app.service.RegistrovaniKorisnikService;
@@ -58,36 +63,54 @@ public class StudentController extends GenericController<Student> {
         return ResponseEntity.ok(studentService.getObavestenjaZaPredmete(id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('OSOBLJE')")
     @GetMapping("")
-    public ResponseEntity<List<StudentDTO>> getAllKorisnici() {
+    public ResponseEntity<List<StudentDTO>> getAllStudenti() {
         List<StudentDTO> dtos = StreamSupport.stream(studentService.findAll().spliterator(), false)
                 .map(studentMapper::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
         Student student = studentService.findById(id);
         return student != null ? ResponseEntity.ok(studentMapper.mapToDTO(student)) : ResponseEntity.notFound().build();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('OSOBLJE')")
     @PostMapping("/kreiraj")
-    public ResponseEntity<StudentDTO> create(@RequestBody StudentDTO dto) {
-        RegistrovaniKorisnik korisnik = korisnikService.findByEmail(dto.getEmail());
-
-        if (korisnik != null) {
-            return ResponseEntity.notFound().build();
-        }
-
+    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO dto) {
+    	
+    	if (korisnikService.postojiKorisnikSaKorisnickimImenom(dto.getKorisnickoIme())) {
+	 		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	 	}
+		
+		if (korisnikService.postojiKorisnikSaEmailom(dto.getEmail())) {
+	 		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	 	}
+    	
         Student student = studentMapper.mapToEntity(dto);
-        student.setId(korisnik.getId());
 
         if (dto.getAdresa() != null) {
             Adresa adresa = adresaService.save(dto.getAdresa());
             student.setAdresa(adresa);
         }
+        
+        Set<StudentNaGodini> studentNaGodinama = new HashSet<>();
+
+        for (StudentNaGodiniDTO studentNaGodiniDTO : dto.getStudentNaGodinima()) {
+    		GodinaStudija godinaStudija = new GodinaStudija();
+    		godinaStudija.setGodina(studentNaGodiniDTO.getGodinaStudija());
+        	
+        	StudentNaGodini studentNaGodini = new StudentNaGodini();
+        	studentNaGodini.setGodinaStudija(godinaStudija);
+        	studentNaGodini.setBrojIndeksa(studentNaGodiniDTO.getBrojIndeksa());
+        	studentNaGodini.setDatumUpisa(studentNaGodiniDTO.getDatumUpisa());
+   
+            studentNaGodinama.add(studentNaGodini);
+        }
+   
+        student.setStudentNaGodinima(studentNaGodinama);
 
         Set<DodeljenoPravoPristupa> dodeljenaPrava = new HashSet<>();
         DodeljenoPravoPristupa dodeljenoPravo = new DodeljenoPravoPristupa();
@@ -102,7 +125,8 @@ public class StudentController extends GenericController<Student> {
         dodeljenaPrava.add(dodeljenoPravo);
 
         student.setDodeljenaPrava(dodeljenaPrava);
-
-        return ResponseEntity.ok(studentMapper.mapToDTO(student));
+        
+		Student sacuvano = (Student) korisnikService.save(student);
+        return ResponseEntity.ok(studentMapper.mapToDTO(sacuvano));
     }
 }

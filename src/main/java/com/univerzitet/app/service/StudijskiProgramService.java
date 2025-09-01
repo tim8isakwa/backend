@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 import com.univerzitet.app.generic.GenericService;
 import com.univerzitet.app.generic.Repo;
 import com.univerzitet.app.model.StudijskiProgram;
+import com.univerzitet.app.repo.StudijskiProgramRepo;
 
 @Service
 public class StudijskiProgramService extends GenericService<StudijskiProgram, Long>{
 
+	private StudijskiProgramRepo repo;
+	
 	@Autowired
-	public StudijskiProgramService(Repo<StudijskiProgram, Long> repository) {
+	public StudijskiProgramService(Repo<StudijskiProgram, Long> repository, StudijskiProgramRepo repo) {
 		super(repository);
+		this.repo = repo;
 	}
 
 	@Override
@@ -33,11 +37,11 @@ public class StudijskiProgramService extends GenericService<StudijskiProgram, Lo
 	}
 
 	public StudijskiProgram findByNaziv(String naziv) {
-		return this.findByNaziv(naziv);
+		return repo.findByNaziv(naziv);
 	}
 	
 	public boolean existsById(Long id) {
-		return this.existsById(id);
+		return repo.existsById(id);
 	}
 	
 	@Override

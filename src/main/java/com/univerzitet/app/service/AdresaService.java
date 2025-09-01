@@ -18,12 +18,14 @@ import com.univerzitet.app.repo.MestoRepo;
 @Service
 public class AdresaService extends GenericService<Adresa, Long> {
 
+	private AdresaRepo adresaRepo;
     private MestoRepo mestoRepo;
     private DrzavaRepo drzavaRepo;
 
     @Autowired
-    public AdresaService(Repo<Adresa, Long> repository, MestoRepo mestoRepo, DrzavaRepo drzavaRepo) {
+    public AdresaService(Repo<Adresa, Long> repository, AdresaRepo adresaRepo, MestoRepo mestoRepo, DrzavaRepo drzavaRepo) {
         super(repository);
+        this.adresaRepo = adresaRepo;
         this.mestoRepo = mestoRepo;
         this.drzavaRepo = drzavaRepo;
     }
@@ -70,6 +72,6 @@ public class AdresaService extends GenericService<Adresa, Long> {
     }
 
     private Optional<Adresa> findByBrojAndUlicaAndMesto(String broj, String ulica, Mesto mesto) {
-        return this.findByBrojAndUlicaAndMesto(broj, ulica, mesto);
+        return adresaRepo.findByBrojAndUlicaAndMesto(broj, ulica, mesto);
     }
 }

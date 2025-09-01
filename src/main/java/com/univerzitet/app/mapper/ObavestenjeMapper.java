@@ -1,6 +1,7 @@
 package com.univerzitet.app.mapper;
 
 import org.springframework.stereotype.Component;
+
 import com.univerzitet.app.dto.ObavestenjeDTO;
 import com.univerzitet.app.model.Obavestenje;
 

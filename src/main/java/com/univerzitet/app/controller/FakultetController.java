@@ -53,9 +53,8 @@ public class FakultetController extends GenericController<Fakultet> {
 		this.programService = programService;
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("")
-	public ResponseEntity<List<FakultetDTO>> getAllKorisnici() {
+	public ResponseEntity<List<FakultetDTO>> getAllFakulteti() {
 		List<FakultetDTO> dtos = StreamSupport.stream(fakultetService.findAll().spliterator(), false)
 				.map(fakultetMapper::mapToDTO).collect(Collectors.toList());
 		return ResponseEntity.ok(dtos);

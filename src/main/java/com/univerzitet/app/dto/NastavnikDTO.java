@@ -12,7 +12,7 @@ public class NastavnikDTO extends RegistrovaniKorisnikDTO {
 	
 	private AdresaDTO adresa;
 	
-	private Set<ZvanjeDTO> zvanja;
+	private ZvanjeDTO zvanje;
 
 	public NastavnikDTO() {
 		super();
@@ -21,13 +21,13 @@ public class NastavnikDTO extends RegistrovaniKorisnikDTO {
 	public NastavnikDTO(Long id, String korisnickoIme, String email, boolean aktivan,
 	                    Set<DodeljenoPravoPristupaDTO> dodeljenaPrava,
 	                    String jmbg, String ime, String biografija,
-	                    AdresaDTO adresa, Set<ZvanjeDTO> zvanja) {
+	                    AdresaDTO adresa, ZvanjeDTO zvanje) {
 		super(id, korisnickoIme, email, aktivan, dodeljenaPrava);
 		this.jmbg = jmbg;
 		this.ime = ime;
 		this.biografija = biografija;
 		this.adresa = adresa;
-		this.zvanja = zvanja;
+		this.zvanje = zvanje;
 	}
 
 	public String getJmbg() {
@@ -62,11 +62,11 @@ public class NastavnikDTO extends RegistrovaniKorisnikDTO {
 		this.adresa = adresa;
 	}
 
-	public Set<ZvanjeDTO> getZvanja() {
-		return zvanja;
+	public ZvanjeDTO getZvanje() {
+		return zvanje;
 	}
 
-	public void setZvanja(Set<ZvanjeDTO> zvanja) {
-		this.zvanja = zvanja;
+	public void setZvanje(ZvanjeDTO zvanje) {
+		this.zvanje = zvanje;
 	}
 }

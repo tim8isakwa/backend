@@ -30,8 +30,8 @@ public class Nastavnik extends RegistrovaniKorisnik {
 	@OneToOne
 	private Adresa adresa;
 	
-	@OneToMany(mappedBy = "nastavnik")
-	private Set<Zvanje> zvanja;
+	@OneToOne
+	private Zvanje zvanje;
 	
 	@ManyToOne
 	private NastavnikNaRealizaciji nastavnikNaRealizaciji;
@@ -45,14 +45,14 @@ public class Nastavnik extends RegistrovaniKorisnik {
 		super(id, korisnickoIme, lozinka, email, aktivan, dodeljenaPrava);
 	}
 
-	public Nastavnik(Long id, String jmbg, String ime, String biografija, Adresa adresa, Set<Zvanje> zvanja) {
+	public Nastavnik(Long id, String jmbg, String ime, String biografija, Adresa adresa, Zvanje zvanje) {
 		super();
 		this.id = id;
 		this.jmbg = jmbg;
 		this.ime = ime;
 		this.biografija = biografija;
 		this.adresa = adresa;
-		this.zvanja = zvanja;
+		this.zvanje = zvanje;
 	}
 
 	public Long getId() {
@@ -95,12 +95,12 @@ public class Nastavnik extends RegistrovaniKorisnik {
 		this.adresa = adresa;
 	}
 
-	public Set<Zvanje> getZvanja() {
-		return zvanja;
+	public Zvanje getZvanje() {
+		return zvanje;
 	}
 
-	public void setZvanja(Set<Zvanje> zvanja) {
-		this.zvanja = zvanja;
+	public void setZvanje(Zvanje zvanje) {
+		this.zvanje = zvanje;
 	}
 
 	public NastavnikNaRealizaciji getNastavnikNaRealizaciji() {

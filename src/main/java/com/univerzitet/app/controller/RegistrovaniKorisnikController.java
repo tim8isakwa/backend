@@ -1,6 +1,8 @@
 package com.univerzitet.app.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.univerzitet.app.dto.NastavnikDTO;
@@ -79,6 +82,22 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		return korisnik != null ? ResponseEntity.ok(korisnikMapper.mapToDTO(korisnik)) : ResponseEntity.notFound().build();
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/status")
+	public ResponseEntity<List<RegistrovaniKorisnikDTO>> getKorisniciByStatus(
+			@RequestParam(name = "aktivan", required = false) Boolean aktivan) {
+		List<RegistrovaniKorisnik> korisnici = Collections.emptyList();
+		
+		if (aktivan != null) {
+			korisnici = korisnikService.findByStatus(aktivan);
+		}
+		
+		List<RegistrovaniKorisnikDTO> dtos = korisnici.stream()
+				.map(korisnikMapper::mapToDTO).collect(Collectors.toList());
+		
+		return ResponseEntity.ok(dtos);
+	}
+	
 	@PostMapping("/prijava")
 	public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> credentials) {
 	    String korisnickoIme = credentials.get("korisnickoIme");
@@ -152,6 +171,7 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		return ResponseEntity.ok(korisnikMapper.mapToDTO(korisnik));
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/osoblje")
 	public ResponseEntity<RegistrovaniKorisnikDTO> addOsoblje(@RequestBody RegistrovaniKorisnikDTO dto) {
 		if (korisnikService.postojiKorisnikSaKorisnickimImenom(dto.getKorisnickoIme())) {
@@ -161,9 +181,14 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		if (korisnikService.postojiKorisnikSaEmailom(dto.getEmail())) {
 	 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	 	}
-		
 
 		RegistrovaniKorisnik korisnik = korisnikMapper.mapToEntity(dto);
+		
+		if (dto.getLozinka() == null || dto.getLozinka().isEmpty()) {
+		    return ResponseEntity.badRequest().body(null); 
+		}
+		
+		korisnik.setLozinka(passwordEncoder.encode(dto.getLozinka()));
 		
 		Set<DodeljenoPravoPristupa> dodeljenaPrava = new HashSet<>();
 		DodeljenoPravoPristupa dodeljenoPravo = new DodeljenoPravoPristupa();
@@ -178,6 +203,7 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		dodeljenaPrava.add(dodeljenoPravo);
 		
 		korisnik.setDodeljenaPrava(dodeljenaPrava);
+		korisnik.setAktivan(true);
 		
 		korisnikService.save(korisnik);
 		return ResponseEntity.ok(korisnikMapper.mapToDTO(korisnik));
@@ -196,7 +222,6 @@ public class RegistrovaniKorisnikController extends GenericController<Registrova
 		
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		return super.delete(id);

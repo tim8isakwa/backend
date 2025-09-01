@@ -1,7 +1,9 @@
 package com.univerzitet.app.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,8 +21,8 @@ public class Drzava {
 	@Lob
 	private String naziv;
 	
-	@OneToMany(mappedBy = "drzava")
-	private Set<Mesto> mesta;
+	@OneToMany(mappedBy = "drzava", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Mesto> mesta = new HashSet<>();
 
 	public Drzava() {
 		super();

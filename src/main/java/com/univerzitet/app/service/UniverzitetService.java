@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 import com.univerzitet.app.generic.GenericService;
 import com.univerzitet.app.generic.Repo;
 import com.univerzitet.app.model.Univerzitet;
+import com.univerzitet.app.repo.UniverzitetRepo;
 
 @Service
 public class UniverzitetService extends GenericService<Univerzitet, Long> {
 
+	private UniverzitetRepo repo;
+	
 	@Autowired
-	public UniverzitetService(Repo<Univerzitet, Long> repository) {
+	public UniverzitetService(Repo<Univerzitet, Long> repository, UniverzitetRepo repo) {
 		super(repository);
+		this.repo = repo;
 	}
 
 	@Override
@@ -33,7 +37,7 @@ public class UniverzitetService extends GenericService<Univerzitet, Long> {
 	}
 
 	public boolean existsById(Long id) {
-		return this.existsById(id);
+		return repo.existsById(id);
 	}
 	
 	@Override
